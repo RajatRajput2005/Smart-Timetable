@@ -1,0 +1,489 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f172a; /* dark navy */
+  color: #f8fafc;      /* almost white */
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: #1e293b;
+  border-bottom: 2px solid #334155;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #14b8a6, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Layout */
+.container {
+  max-width: 1300px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Sidebar */
+aside {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.2rem;
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+}
+
+aside h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+aside nav a {
+  display: block;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  color: #e2e8f0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+aside nav a:hover {
+  background: #14b8a6;
+  color: #0f172a;
+  font-weight: bold;
+  transform: translateX(5px);
+}
+
+/* Main content */
+main {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+/* Cards */
+.card {
+  background: #334155;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #14b8a6, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card p {
+  color: #94a3b8;
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+button {
+  background: #14b8a6;
+  color: #0f172a;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0.2rem;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #9333ea;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Inputs */
+input, textarea, select {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.4rem 0;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 5px #14b8a6;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #475569;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+th {
+  background: #334155;
+}
+
+tr:nth-child(even) {
+  background: #1e293b;
+}
+
+/* Utility */
+.flex { display: flex; }
+.space-between { justify-content: space-between; }
+.gap { gap: 1rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+/* Navbar */
+.navbar {
+  background: #1e293b;
+  border-bottom: 2px solid #334155;
+  padding: 0.8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(to right, #14b8a6, #9333ea);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.navbar-left h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f8fafc;
+}
+
+.navbar-left p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* Search Bar */
+.navbar-center input {
+  width: 300px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+.navbar-center input:focus {
+  outline: none;
+  border-color: #14b8a6;
+}
+
+/* Navbar Right */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-right button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #f1f5f9;
+  transition: transform 0.2s;
+}
+
+.navbar-right button:hover {
+  transform: scale(1.2);
+  color: #14b8a6;
+}
+
+/* Profile Dropdown */
+.profile {
+  position: relative;
+}
+
+.profile span {
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.profile-menu a {
+  padding: 0.6rem;
+  text-decoration: none;
+  color: #e2e8f0;
+  transition: background 0.2s;
+}
+
+.profile-menu a:hover {
+  background: #14b8a6;
+  color: #0f172a;
+}
+
+.profile:hover .profile-menu {
+  display: flex;
+}
+
+/* Light/Dark Mode (Demo) */
+body.light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+body.light .navbar,
+body.light .footer,
+body.light aside,
+body.light main {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+/* Footer */
+.footer {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  border-top: 2px solid #334155;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  margin-bottom: 0.8rem;
+  color: #14b8a6;
+}
+
+.footer-section p {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.4rem;
+}
+
+.footer-section a {
+  text-decoration: none;
+  color: #f1f5f9;
+  transition: color 0.3s;
+}
+
+.footer-section a:hover {
+  color: #9333ea;
+}
+
+.social-icons a {
+  display: block;
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  border-top: 1px solid #334155;
+  padding-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* --------------------------
+   THEME: LIGHT MODE
+---------------------------*/
+body.light {
+  background: #f8fafc; /* light background */
+  color: #0f172a;      /* dark text */
+}
+
+/* Navbar */
+body.light .navbar {
+  background: #f1f5f9;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+body.light .navbar-left h1,
+body.light .navbar-left p,
+body.light .navbar-right button,
+body.light .profile span {
+  color: #0f172a;
+}
+
+body.light .navbar-center input {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+/* Sidebar */
+body.light aside {
+  background: #f1f5f9;
+  border-right: 1px solid #cbd5e1;
+}
+
+body.light aside h3 {
+  color: #0f172a;
+}
+
+body.light aside nav a {
+  color: #0f172a;
+}
+body.light aside nav a:hover {
+  background: #e2e8f0;
+  color: #9333ea;
+}
+
+/* Main Content */
+body.light main {
+  background: #fff;
+  color: #0f172a;
+}
+
+/* Cards */
+body.light .card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+/* Footer */
+body.light .footer {
+  background: #f1f5f9;
+  border-top: 2px solid #cbd5e1;
+  color: #0f172a;
+}
+
+body.light .footer-section h3,
+body.light .footer-section h4 {
+  color: #9333ea;
+}
+
+body.light .footer-section p,
+body.light .footer-section a {
+  color: #0f172a;
+}
+
+body.light .footer-bottom {
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+/* Tables */
+body.light table {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+body.light table th,
+body.light table td {
+  border: 1px solid #cbd5e1;
+}
+body.light table th {
+  background: #e2e8f0;
+}
