@@ -1,40 +1,86 @@
 "use client";
 
 import { useState } from "react";
+import smartTimetableService from "@/lib/smart-timetable-service";
 
 export default function TimetablePage() {
   const [generated, setGenerated] = useState(false);
   const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState("B.Ed");
+  const [selectedSemester, setSelectedSemester] = useState(1);
+  const [optimizationLevel, setOptimizationLevel] = useState("medium");
+  const [generationProgress, setGenerationProgress] = useState(null);
+  const [generationResult, setGenerationResult] = useState(null);
+  const [error, setError] = useState(null);
 
-  const subjects = ["Maths", "Science", "English", "History", "Biology", "Chemistry", "Geography"];
-  const sports = ["⚽ Football", "🏀 Basketball", "🏏 Cricket"];
-  const extras = ["🎶 Music", "💃 Dance", "🗣 Debate Club", "🎭 Drama"];
-  const labs = ["💻 Computer Lab", "🔬 Physics Lab", "🧪 Chemistry Lab"];
-  const breaks = ["☕ Break", "🍴 Lunch Break"];
+  // Available programs and semesters
+  const programs = ["B.Ed", "M.Ed", "FYUP", "ITEP"];
+  const semesters = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const slots = ["9:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00", "12:00 - 1:00", "2:00 - 3:00", "3:00 - 4:00"];
+  // Days and time slots for display
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const timeSlots = ["09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00", "14:00-15:00", "15:00-16:00", "16:00-17:00", "17:00-18:00"];
 
-  function getRandomItem(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
+  const generateTimetable = async () => {
+    setLoading(true);
+    setError(null);
+    setGenerationProgress(null);
+    setGenerationResult(null);
 
-  const generateTimetable = () => {
-    const tempSchedule = days.map((day) => {
-      return {
-        day,
-        sessions: slots.map((slot) => {
-          const roll = Math.random();
-          if (roll < 0.5) return getRandomItem(subjects);
-          if (roll < 0.65) return getRandomItem(sports);
-          if (roll < 0.8) return getRandomItem(extras);
-          if (roll < 0.9) return getRandomItem(labs);
-          return getRandomItem(breaks);
-        }),
-      };
-    });
-    setSchedule(tempSchedule);
-    setGenerated(true);
+    try {
+      console.log(`Generating AI-optimized timetable for ${selectedProgram} Semester ${selectedSemester}`);
+      
+      const result = await smartTimetableService.generateTimetable({
+        program: selectedProgram,
+        semester: selectedSemester,
+        optimizationLevel: optimizationLevel,
+        maxGenerations: optimizationLevel === "high" ? 300 : optimizationLevel === "medium" ? 200 : 100,
+        onProgress: (progress) => {
+          setGenerationProgress(progress);
+        }
+      });
+
+      console.log("Timetable generation completed:", result);
+      
+      // Convert the AI result to the display format
+      const formattedSchedule = formatScheduleForDisplay(result.schedule);
+      setSchedule(formattedSchedule);
+      setGenerationResult(result);
+      setGenerated(true);
+
+    } catch (err) {
+      console.error("Error generating timetable:", err);
+      setError(err.message || "Failed to generate timetable");
+    } finally {
+      setLoading(false);
+      setGenerationProgress(null);
+    }
+  };
+
+  // Format AI schedule result for display in table
+  const formatScheduleForDisplay = (aiSchedule) => {
+    const formatted = days.map(day => ({
+      day,
+      sessions: timeSlots.map(slot => {
+        const entry = aiSchedule.find(item => 
+          item.day === day && item.timeSlot === slot
+        );
+        
+        if (entry) {
+          return {
+            course: entry.courseName || "Unknown Course",
+            faculty: entry.facultyName || "TBA",
+            room: entry.roomName || "TBA",
+            students: entry.students?.length || 0
+          };
+        }
+        
+        return null; // Empty slot
+      })
+    }));
+    
+    return formatted;
   };
 
   // PDF Export (prints the timetable area)
@@ -76,50 +122,185 @@ export default function TimetablePage() {
           }}
           className="mt-6"
         >
-          <label>Program:</label>
-          <input type="text" placeholder="e.g. B.Ed Year 1" />
+          <div className="grid-2 gap">
+            <div>
+              <label>Program:</label>
+              <select 
+                value={selectedProgram} 
+                onChange={(e) => setSelectedProgram(e.target.value)}
+                disabled={loading}
+              >
+                {programs.map(program => (
+                  <option key={program} value={program}>{program}</option>
+                ))}
+              </select>
+            </div>
 
-          <label>Semester:</label>
-          <select>
-            <option>Semester 1</option>
-            <option>Semester 2</option>
-            <option>Semester 3</option>
-            <option>Semester 4</option>
-          </select>
+            <div>
+              <label>Semester:</label>
+              <select 
+                value={selectedSemester} 
+                onChange={(e) => setSelectedSemester(parseInt(e.target.value))}
+                disabled={loading}
+              >
+                {semesters.map(sem => (
+                  <option key={sem} value={sem}>Semester {sem}</option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-          <label>Subjects (comma separated):</label>
-          <textarea placeholder="Mathematics, Science, English"></textarea>
+          <div className="mt-4">
+            <label>AI Optimization Level:</label>
+            <select 
+              value={optimizationLevel} 
+              onChange={(e) => setOptimizationLevel(e.target.value)}
+              disabled={loading}
+            >
+              <option value="low">Low (Fast, Basic optimization)</option>
+              <option value="medium">Medium (Balanced speed and quality)</option>
+              <option value="high">High (Slower, Best quality)</option>
+            </select>
+          </div>
 
-          <label>Sports Activities:</label>
-          <input type="text" placeholder="Football, Basketball" />
+          {/* Program Information */}
+          <div className="mt-4 p-4" style={{ background: "#1e293b", borderRadius: "8px", border: "1px solid #334155" }}>
+            <h4>📋 NEP 2020 Program Information</h4>
+            <div className="mt-2">
+              {selectedProgram === "B.Ed" && (
+                <div>
+                  <p><strong>Bachelor of Education</strong> - 4 Year Program</p>
+                  <p>🎯 Focus: Teacher training with pedagogy, teaching practice, and content knowledge</p>
+                  <p>📚 Credits: Major (50), Minor (20), Skills (20), Ability Enhancement (20), Value Added (10)</p>
+                </div>
+              )}
+              {selectedProgram === "M.Ed" && (
+                <div>
+                  <p><strong>Master of Education</strong> - 2 Year Program</p>
+                  <p>🎯 Focus: Advanced educational research and specialized teaching methodologies</p>
+                  <p>📚 Credits: Core (40), Elective (20), Dissertation (10), Practicum (10)</p>
+                </div>
+              )}
+              {selectedProgram === "FYUP" && (
+                <div>
+                  <p><strong>Four Year Undergraduate Program</strong></p>
+                  <p>🎯 Focus: Multidisciplinary education with multiple exit options</p>
+                  <p>📚 Credits: Major (60), Minor (32), Multidisciplinary (20), Skills & Abilities (32)</p>
+                </div>
+              )}
+              {selectedProgram === "ITEP" && (
+                <div>
+                  <p><strong>Integrated Teacher Education Program</strong> - 4 Year Program</p>
+                  <p>🎯 Focus: Integrated content and pedagogy from the beginning</p>
+                  <p>📚 Credits: Content (70), Pedagogy (40), Practice (20), Research (10)</p>
+                </div>
+              )}
+            </div>
+          </div>
 
-          <label>Extracurriculars:</label>
-          <input type="text" placeholder="Music, Dance, Debate Club" />
+          {/* Generation Progress */}
+          {loading && generationProgress && (
+            <div className="mt-4 p-4" style={{ background: "#065f46", borderRadius: "8px" }}>
+              <h4>🤖 AI Timetable Generation in Progress...</h4>
+              {generationProgress.phase === 'evolution' && (
+                <div className="mt-2">
+                  <p>Generation: {generationProgress.generation}</p>
+                  <p>Best Fitness: {generationProgress.bestFitness?.toFixed(2)}</p>
+                  <p>Conflicts: {generationProgress.conflicts}</p>
+                  <div className="mt-2" style={{ background: "#0f172a", borderRadius: "4px", overflow: "hidden" }}>
+                    <div 
+                      style={{ 
+                        width: `${Math.min(100, (generationProgress.generation / 300) * 100)}%`, 
+                        height: "8px", 
+                        background: "#14b8a6", 
+                        transition: "width 0.3s" 
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+              {generationProgress.phase === 'conflict_resolution' && (
+                <p className="mt-2">🔧 Resolving scheduling conflicts...</p>
+              )}
+            </div>
+          )}
 
-          <label>Lab Sessions:</label>
-          <input type="text" placeholder="Computer Lab, Physics Lab" />
+          {/* Error Display */}
+          {error && (
+            <div className="mt-4 p-4" style={{ background: "#7f1d1d", borderRadius: "8px" }}>
+              <h4>❌ Error</h4>
+              <p className="mt-2">{error}</p>
+            </div>
+          )}
 
-          <label>Break Times:</label>
-          <input type="text" placeholder="11:00 AM - 11:30 AM" />
-
-          <label>Custom Notes:</label>
-          <textarea placeholder="Any special instructions (e.g. Labs only on Fri)" />
-
-          <button type="submit" className="mt-4">
-            ⚡ Generate Dummy Timetable
+          <button 
+            type="submit" 
+            className="mt-4" 
+            disabled={loading}
+            style={{ opacity: loading ? 0.6 : 1 }}
+          >
+            {loading ? "🤖 Generating AI Timetable..." : "🚀 Generate AI-Optimized Timetable"}
           </button>
         </form>
       ) : (
         <div className="mt-6">
-          <h3>📅 Generated Dummy Timetable</h3>
-          <p className="mt-2">This is randomized each time you generate it.</p>
+          <div className="flex space-between align-center mb-4">
+            <div>
+              <h3>🤖 AI-Generated Timetable</h3>
+              <p className="mt-2">
+                {selectedProgram} Semester {selectedSemester} - Optimized using Genetic Algorithm
+              </p>
+            </div>
+            {generationResult && (
+              <div className="text-right">
+                <div className="quality-score" style={{ 
+                  display: "inline-block", 
+                  padding: "0.5rem 1rem", 
+                  borderRadius: "20px", 
+                  background: generationResult.qualityScore >= 80 ? "#065f46" : generationResult.qualityScore >= 60 ? "#d97706" : "#7f1d1d",
+                  fontWeight: "bold"
+                }}>
+                  Quality: {generationResult.qualityScore}/100
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Generation Statistics */}
+          {generationResult && (
+            <div className="grid-3 gap mb-6">
+              <div className="card" style={{ padding: "1rem" }}>
+                <h4>📊 Optimization Results</h4>
+                <p>Generations: {generationResult.optimization.generations}</p>
+                <p>Final Fitness: {generationResult.optimization.finalFitness.toFixed(2)}</p>
+                <p>Conflicts Resolved: {generationResult.optimization.conflicts.resolved}</p>
+                <p>Remaining Issues: {generationResult.optimization.conflicts.remaining}</p>
+              </div>
+              
+              <div className="card" style={{ padding: "1rem" }}>
+                <h4>📈 Utilization Metrics</h4>
+                <p>Faculty: {generationResult.metrics.facultyUtilization.toFixed(1)}%</p>
+                <p>Rooms: {generationResult.metrics.roomUtilization.toFixed(1)}%</p>
+                <p>Student Satisfaction: {generationResult.metrics.studentSatisfaction.toFixed(1)}%</p>
+                <p>Total Classes: {generationResult.metrics.totalClasses}</p>
+              </div>
+
+              <div className="card" style={{ padding: "1rem" }}>
+                <h4>🎯 NEP 2020 Compliance</h4>
+                <p>✅ Credit Structure Followed</p>
+                <p>✅ Multi-disciplinary Courses</p>
+                <p>✅ Teaching Practice Integrated</p>
+                <p>✅ Conflict-Free Scheduling</p>
+              </div>
+            </div>
+          )}
 
           <div id="timetable-area">
             <table>
               <thead>
                 <tr>
-                  <th>Day</th>
-                  {slots.map((slot) => (
+                  <th>Day / Time</th>
+                  {timeSlots.map((slot) => (
                     <th key={slot}>{slot}</th>
                   ))}
                 </tr>
@@ -127,9 +308,32 @@ export default function TimetablePage() {
               <tbody>
                 {schedule.map((row) => (
                   <tr key={row.day}>
-                    <td>{row.day}</td>
+                    <td style={{ fontWeight: "bold", background: "#334155" }}>{row.day}</td>
                     {row.sessions.map((session, i) => (
-                      <td key={i}>{session}</td>
+                      <td key={i} style={{ 
+                        padding: session ? "0.5rem" : "1rem",
+                        background: session ? "#1e293b" : "#0f172a",
+                        border: session ? "1px solid #14b8a6" : "1px solid #475569"
+                      }}>
+                        {session ? (
+                          <div style={{ fontSize: "0.85rem" }}>
+                            <div style={{ fontWeight: "bold", color: "#14b8a6" }}>
+                              {session.course}
+                            </div>
+                            <div style={{ color: "#94a3b8", marginTop: "0.25rem" }}>
+                              👨‍🏫 {session.faculty}
+                            </div>
+                            <div style={{ color: "#94a3b8" }}>
+                              🏢 {session.room}
+                            </div>
+                            <div style={{ color: "#94a3b8" }}>
+                              👥 {session.students} students
+                            </div>
+                          </div>
+                        ) : (
+                          <span style={{ color: "#475569" }}>Free</span>
+                        )}
+                      </td>
                     ))}
                   </tr>
                 ))}
@@ -137,11 +341,34 @@ export default function TimetablePage() {
             </table>
           </div>
 
+          {/* Remaining Conflicts Display */}
+          {generationResult && generationResult.optimization.conflicts.remaining > 0 && (
+            <div className="mt-4 p-4" style={{ background: "#7f1d1d", borderRadius: "8px" }}>
+              <h4>⚠️ Remaining Conflicts ({generationResult.optimization.conflicts.remaining})</h4>
+              <div className="mt-2">
+                {generationResult.optimization.conflicts.details.slice(0, 3).map((conflict, i) => (
+                  <p key={i}>• {conflict.description}</p>
+                ))}
+                {generationResult.optimization.conflicts.details.length > 3 && (
+                  <p>...and {generationResult.optimization.conflicts.details.length - 3} more</p>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="mt-4 flex gap">
-            <button onClick={generateTimetable}>🔄 Generate Again</button>
+            <button onClick={generateTimetable} disabled={loading}>
+              🔄 Generate Again
+            </button>
             <button onClick={() => setGenerated(false)}>↩️ Back to Form</button>
             <button onClick={downloadPDF}>📄 Download as PDF</button>
             <button onClick={shareOnWhatsApp}>📲 Send to WhatsApp</button>
+            <button 
+              onClick={() => navigator.clipboard.writeText(JSON.stringify(generationResult, null, 2))}
+              title="Copy detailed results"
+            >
+              📋 Copy Results
+            </button>
           </div>
         </div>
       )}

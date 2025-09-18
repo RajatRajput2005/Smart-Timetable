@@ -1,4 +1,5 @@
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "Smart Timetable",
@@ -36,9 +37,9 @@ export default function RootLayout({ children }) {
             <div className="profile">
               <span>👤</span>
               <div className="profile-menu">
-                <a href="/">Dashboard</a>
-                <a href="/teachers">Faculty</a>
-                <a href="/rooms">Rooms</a>
+                <Link href="/">Dashboard</Link>
+                <Link href="/teachers">Faculty</Link>
+                <Link href="/rooms">Rooms</Link>
                 <a href="#">Logout</a>
               </div>
             </div>
@@ -50,14 +51,14 @@ export default function RootLayout({ children }) {
           <aside>
             <h3>Navigation</h3>
             <nav>
-              <a href="/">📊 Dashboard</a>
-              <a href="/timetable">➕ New Timetable</a>
-              <a href="/all-timetables">📋 All Timetables</a>
-              <a href="/edit-timetable">✏️ Edit Timetable</a>
-              <a href="/teachers">👨‍🏫 Faculty</a>
-              <a href="/rooms">🏢 Rooms</a>
-              <a href="/timeslots">⏰ Time Slots</a>
-              <a href="/export">📤 Export</a>
+              <Link href="/">📊 Dashboard</Link>
+              <Link href="/timetable">➕ New Timetable</Link>
+              <Link href="/all-timetables">📋 All Timetables</Link>
+              <Link href="/edit-timetable">✏️ Edit Timetable</Link>
+              <Link href="/teachers">👨‍🏫 Faculty</Link>
+              <Link href="/rooms">🏢 Rooms</Link>
+              <Link href="/timeslots">⏰ Time Slots</Link>
+              <Link href="/export">📤 Export</Link>
             </nav>
           </aside>
 
@@ -80,10 +81,10 @@ export default function RootLayout({ children }) {
             <div className="footer-section">
               <h4>Quick Links</h4>
               <ul>
-                <li><a href="/">Dashboard</a></li>
-                <li><a href="/timetable">New Timetable</a></li>
-                <li><a href="/all-timetables">All Timetables</a></li>
-                <li><a href="/teachers">Faculty</a></li>
+                <li><Link href="/">Dashboard</Link></li>
+                <li><Link href="/timetable">New Timetable</Link></li>
+                <li><Link href="/all-timetables">All Timetables</Link></li>
+                <li><Link href="/teachers">Faculty</Link></li>
               </ul>
             </div>
 
