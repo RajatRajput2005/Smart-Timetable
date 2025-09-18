@@ -9,9 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
+    "genetic-js": "^0.1.14",
+    "lodash": "^4.17.21",
+    "ml-matrix": "^6.12.1",
     "next": "15.5.3",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
