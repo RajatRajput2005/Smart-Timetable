@@ -165,34 +165,34 @@ export default function TimetablePage() {
 
           {/* Program Information */}
           <div className="mt-4 p-4" style={{ background: "#1e293b", borderRadius: "8px", border: "1px solid #334155" }}>
-            <h4>📋 NEP 2020 Program Information</h4>
+            <h4> NEP 2020 Program Information</h4>
             <div className="mt-2">
               {selectedProgram === "B.Ed" && (
                 <div>
                   <p><strong>Bachelor of Education</strong> - 4 Year Program</p>
-                  <p>🎯 Focus: Teacher training with pedagogy, teaching practice, and content knowledge</p>
-                  <p>📚 Credits: Major (50), Minor (20), Skills (20), Ability Enhancement (20), Value Added (10)</p>
+                  <p>Focus: Teacher training with pedagogy, teaching practice, and content knowledge</p>
+                  <p>Credits: Major (50), Minor (20), Skills (20), Ability Enhancement (20), Value Added (10)</p>
                 </div>
               )}
               {selectedProgram === "M.Ed" && (
                 <div>
                   <p><strong>Master of Education</strong> - 2 Year Program</p>
-                  <p>🎯 Focus: Advanced educational research and specialized teaching methodologies</p>
-                  <p>📚 Credits: Core (40), Elective (20), Dissertation (10), Practicum (10)</p>
+                  <p>Focus: Advanced educational research and specialized teaching methodologies</p>
+                  <p>Credits: Core (40), Elective (20), Dissertation (10), Practicum (10)</p>
                 </div>
               )}
               {selectedProgram === "FYUP" && (
                 <div>
                   <p><strong>Four Year Undergraduate Program</strong></p>
-                  <p>🎯 Focus: Multidisciplinary education with multiple exit options</p>
-                  <p>📚 Credits: Major (60), Minor (32), Multidisciplinary (20), Skills & Abilities (32)</p>
+                  <p>Focus: Multidisciplinary education with multiple exit options</p>
+                  <p>Credits: Major (60), Minor (32), Multidisciplinary (20), Skills & Abilities (32)</p>
                 </div>
               )}
               {selectedProgram === "ITEP" && (
                 <div>
                   <p><strong>Integrated Teacher Education Program</strong> - 4 Year Program</p>
-                  <p>🎯 Focus: Integrated content and pedagogy from the beginning</p>
-                  <p>📚 Credits: Content (70), Pedagogy (40), Practice (20), Research (10)</p>
+                  <p>Focus: Integrated content and pedagogy from the beginning</p>
+                  <p>Credits: Content (70), Pedagogy (40), Practice (20), Research (10)</p>
                 </div>
               )}
             </div>
@@ -201,7 +201,7 @@ export default function TimetablePage() {
           {/* Generation Progress */}
           {loading && generationProgress && (
             <div className="mt-4 p-4" style={{ background: "#065f46", borderRadius: "8px" }}>
-              <h4>🤖 AI Timetable Generation in Progress...</h4>
+              <h4>AI Timetable Generation in Progress...</h4>
               {generationProgress.phase === 'evolution' && (
                 <div className="mt-2">
                   <p>Generation: {generationProgress.generation}</p>
@@ -239,14 +239,14 @@ export default function TimetablePage() {
             disabled={loading}
             style={{ opacity: loading ? 0.6 : 1 }}
           >
-            {loading ? "🤖 Generating AI Timetable..." : "🚀 Generate AI-Optimized Timetable"}
+            {loading ? "Generating AI Timetable..." : "Generate AI-Optimized Timetable"}
           </button>
         </form>
       ) : (
         <div className="mt-6">
           <div className="flex space-between align-center mb-4">
             <div>
-              <h3>🤖 AI-Generated Timetable</h3>
+              <h3>AI-Generated Timetable</h3>
               <p className="mt-2">
                 {selectedProgram} Semester {selectedSemester} - Optimized using Genetic Algorithm
               </p>
@@ -270,7 +270,7 @@ export default function TimetablePage() {
           {generationResult && (
             <div className="grid-3 gap mb-6">
               <div className="card" style={{ padding: "1rem" }}>
-                <h4>📊 Optimization Results</h4>
+                <h4>Optimization Results</h4>
                 <p>Generations: {generationResult.optimization.generations}</p>
                 <p>Final Fitness: {generationResult.optimization.finalFitness.toFixed(2)}</p>
                 <p>Conflicts Resolved: {generationResult.optimization.conflicts.resolved}</p>
@@ -278,7 +278,7 @@ export default function TimetablePage() {
               </div>
               
               <div className="card" style={{ padding: "1rem" }}>
-                <h4>📈 Utilization Metrics</h4>
+                <h4>Utilization Metrics</h4>
                 <p>Faculty: {generationResult.metrics.facultyUtilization.toFixed(1)}%</p>
                 <p>Rooms: {generationResult.metrics.roomUtilization.toFixed(1)}%</p>
                 <p>Student Satisfaction: {generationResult.metrics.studentSatisfaction.toFixed(1)}%</p>
@@ -286,7 +286,7 @@ export default function TimetablePage() {
               </div>
 
               <div className="card" style={{ padding: "1rem" }}>
-                <h4>🎯 NEP 2020 Compliance</h4>
+                <h4>NEP 2020 Compliance</h4>
                 <p>✅ Credit Structure Followed</p>
                 <p>✅ Multi-disciplinary Courses</p>
                 <p>✅ Teaching Practice Integrated</p>

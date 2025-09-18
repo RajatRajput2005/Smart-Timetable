@@ -23,8 +23,8 @@ export default function AllTimetablesPage() {
             <td>✅ Active</td>
             <td>2 hours ago</td>
             <td>
-              <button>👁️ View</button>
-              <button>✏️ Edit</button>
+              <button>View</button>
+              <button>Edit</button>
             </td>
           </tr>
           <tr>
@@ -34,8 +34,8 @@ export default function AllTimetablesPage() {
             <td>🕒 Draft</td>
             <td>1 day ago</td>
             <td>
-              <button>👁️ View</button>
-              <button>✏️ Edit</button>
+              <button>View</button>
+              <button>Edit</button>
             </td>
           </tr>
           <tr>
@@ -45,8 +45,8 @@ export default function AllTimetablesPage() {
             <td>✅ Active</td>
             <td>5 days ago</td>
             <td>
-              <button>👁️ View</button>
-              <button>✏️ Edit</button>
+              <button>View</button>
+              <button>Edit</button>
             </td>
           </tr>
         </tbody>

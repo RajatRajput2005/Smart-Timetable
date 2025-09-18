@@ -51,14 +51,14 @@ export default function RootLayout({ children }) {
           <aside>
             <h3>Navigation</h3>
             <nav>
-              <Link href="/">📊 Dashboard</Link>
-              <Link href="/timetable">➕ New Timetable</Link>
-              <Link href="/all-timetables">📋 All Timetables</Link>
-              <Link href="/edit-timetable">✏️ Edit Timetable</Link>
-              <Link href="/teachers">👨‍🏫 Faculty</Link>
-              <Link href="/rooms">🏢 Rooms</Link>
-              <Link href="/timeslots">⏰ Time Slots</Link>
-              <Link href="/export">📤 Export</Link>
+              <Link href="/">Dashboard</Link>
+              <Link href="/timetable">New Timetable</Link>
+              <Link href="/all-timetables">All Timetables</Link>
+              <Link href="/edit-timetable">Edit Timetable</Link>
+              <Link href="/teachers">Faculty</Link>
+              <Link href="/rooms">Rooms</Link>
+              <Link href="/timeslots">Time Slots</Link>
+              <Link href="/export">Export</Link>
             </nav>
           </aside>
 

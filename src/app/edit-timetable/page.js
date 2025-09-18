@@ -32,7 +32,7 @@ export default function EditTimetablePage() {
         </tbody>
       </table>
 
-      <button className="mt-4">💾 Save Changes</button>
+      <button className="mt-4">Save Changes</button>
     </div>
   );
 }
