@@ -1,28 +1,63 @@
+"use client";
+import { useEffect, useState } from "react";
+
 export default function RoomsPage() {
+  const [rooms, setRooms] = useState([]);
+  const [name, setName] = useState("");
+  const [capacity, setCapacity] = useState("");
+
+  useEffect(() => {
+    fetch("/api/rooms").then(res => res.json()).then(setRooms);
+  }, []);
+
+  const addRoom = async (e) => {
+    e.preventDefault();
+    const res = await fetch("/api/rooms", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, capacity: parseInt(capacity) }),
+    });
+    if (res.ok) {
+      const newR = await res.json();
+      setRooms([...rooms, newR]);
+      setName("");
+      setCapacity("");
+    }
+  };
+
   return (
     <div>
-      <h2>🏢 Room Management</h2>
-      <p className="mt-4">Manage classroom capacities and availability.</p>
+      <h2>Rooms Management</h2>
+      <form onSubmit={addRoom} style={{ marginBottom: "1rem" }}>
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Room Name"
+          required
+        />
+        <input
+          value={capacity}
+          onChange={e => setCapacity(e.target.value)}
+          placeholder="Capacity"
+          type="number"
+        />
+        <button type="submit">Add Room</button>
+      </form>
 
-      <div className="flex gap mt-6">
-        <div className="card">
-          <h3>Room 101</h3>
-          <p>Capacity: 40</p>
-          <p>Status: ✅ Available</p>
-        </div>
-        <div className="card">
-          <h3>Room 102</h3>
-          <p>Capacity: 60</p>
-          <p>Status: ❌ In Use</p>
-        </div>
-        <div className="card">
-          <h3>Lab 201</h3>
-          <p>Capacity: 25</p>
-          <p>Status: ✅ Available</p>
-        </div>
-      </div>
-
-      <button className="mt-6">➕ Add Room</button>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Capacity</th></tr>
+        </thead>
+        <tbody>
+          {rooms.map(r => (
+            <tr key={r.id}>
+              <td>{r.id}</td>
+              <td>{r.name}</td>
+              <td>{r.capacity}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

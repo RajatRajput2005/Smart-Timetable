@@ -26,16 +26,16 @@ export default function RootLayout({ children }) {
           <div className="navbar-center">
             <input
               type="text"
-              placeholder="🔍 Search timetables, faculty, rooms..."
+              placeholder="Search timetables, faculty, rooms..."
             />
           </div>
 
           {/* Right: Actions */}
           <div className="navbar-right">
-            <button id="theme-toggle">🌙</button>
-            <button>🔔</button>
+            <button id="theme-toggle">Mode</button>
+            <button>Notification</button>
             <div className="profile">
-              <span>👤</span>
+              <span>Profile</span>
               <div className="profile-menu">
                 <Link href="/">Dashboard</Link>
                 <Link href="/teachers">Faculty</Link>
@@ -51,14 +51,14 @@ export default function RootLayout({ children }) {
           <aside>
             <h3>Navigation</h3>
             <nav>
-              <Link href="/">📊 Dashboard</Link>
-              <Link href="/timetable">➕ New Timetable</Link>
-              <Link href="/all-timetables">📋 All Timetables</Link>
-              <Link href="/edit-timetable">✏️ Edit Timetable</Link>
-              <Link href="/teachers">👨‍🏫 Faculty</Link>
-              <Link href="/rooms">🏢 Rooms</Link>
-              <Link href="/timeslots">⏰ Time Slots</Link>
-              <Link href="/export">📤 Export</Link>
+              <Link href="/"> Dashboard</Link>
+              <Link href="/timetable"> New Timetable</Link>
+              <Link href="/all-timetables"> All Timetables</Link>
+              <Link href="/edit-timetable"> Edit Timetable</Link>
+              <Link href="/teachers">Faculty</Link>
+              <Link href="/rooms">Rooms</Link>
+              <Link href="/timeslots"> Time Slots</Link>
+              <Link href="/export">Export</Link>
             </nav>
           </aside>
 
@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
           </div>
 
           <div className="footer-bottom">
-            <p>⚡ No Copyright – Use Freely | Made with ❤️ for SIH </p>
+            <p> No Copyright – Use Freely | Made with ❤️ for SIH </p>
           </div>
         </footer>
 
