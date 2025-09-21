@@ -1,7 +1,7 @@
 export default function EditTimetablePage() {
   return (
     <div>
-      <h2>✏️ Edit Timetable</h2>
+      <h2>Edit Timetable</h2>
       <p className="mt-4">Modify timetable entries directly in the grid below:</p>
 
       <table>

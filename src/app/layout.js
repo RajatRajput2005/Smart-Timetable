@@ -2,8 +2,8 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Smart Timetable",
-  description: "NEP 2020 AI Engine",
+  title: "Smart Timetable - Modern Academic Scheduling",
+  description: "Professional timetable management system for educational institutions",
 };
 
 export default function RootLayout({ children }) {
@@ -15,10 +15,9 @@ export default function RootLayout({ children }) {
         <header className="navbar">
           {/* Left: Logo */}
           <div className="navbar-left">
-            <div className="logo">ST</div>
             <div>
               <h1>Smart Timetable</h1>
-              <p>NEP 2020 AI Engine</p>
+              <p>Academic Scheduling Platform</p>
             </div>
           </div>
 
@@ -32,14 +31,15 @@ export default function RootLayout({ children }) {
 
           {/* Right: Actions */}
           <div className="navbar-right">
-            <button id="theme-toggle">Mode</button>
-            <button>Notification</button>
+            <button id="theme-toggle">Theme</button>
+            <button>Notifications</button>
             <div className="profile">
               <span>Profile</span>
               <div className="profile-menu">
                 <Link href="/">Dashboard</Link>
                 <Link href="/teachers">Faculty</Link>
                 <Link href="/rooms">Rooms</Link>
+                <a href="#">Settings</a>
                 <a href="#">Logout</a>
               </div>
             </div>
@@ -91,19 +91,19 @@ export default function RootLayout({ children }) {
             {/* Contact Info */}
             <div className="footer-section">
               <h4>Contact</h4>
-              <p>📍 Greater Noida, India</p>
-              <p>📞 +91 98765 43210</p>
-              <p>✉️ support@smarttimetable.com</p>
+              <p>Greater Noida, India</p>
+              <p>+91 98765 43210</p>
+              <p>support@smarttimetable.com</p>
             </div>
 
             {/* Social Media */}
             <div className="footer-section">
               <h4>Follow Us</h4>
               <div className="social-icons">
-                <a href="https://facebook.com" target="_blank">📘 Facebook</a>
-                <a href="https://instagram.com" target="_blank">📸 Instagram</a>
-                <a href="https://linkedin.com" target="_blank">💼 LinkedIn</a>
-                <a href="https://twitter.com" target="_blank">🐦 Twitter</a>
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com" target="_blank">Twitter</a>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function RootLayout({ children }) {
                 const toggle = document.getElementById("theme-toggle");
                 toggle.addEventListener("click", () => {
                   document.body.classList.toggle("light");
-                  toggle.textContent = document.body.classList.contains("light") ? "🌞" : "🌙";
+                  toggle.textContent = document.body.classList.contains("light") ? "Light" : "Dark";
                 });
               });
             `,

@@ -46,50 +46,85 @@ export default function TimetablePage() {
 
   return (
     <div>
-      <h2>New Timetable</h2>
-
-      <div>
-        <label>Course:</label>
-        <select value={course} onChange={e=>setCourse(e.target.value)}>
-          <option>B.Ed</option>
-          <option>M.Ed</option>
-          <option>FYUP</option>
-          <option>ITEP</option>
-        </select>
-
-        <label>Semester:</label>
-        <select value={semester} onChange={e=>setSemester(Number(e.target.value))}>
-          {[1,2,3,4,5,6,7,8].map(s=><option key={s}>{s}</option>)}
-        </select>
+      <div style={{marginBottom: "2rem"}}>
+        <h2>New Timetable</h2>
+        <p>Create a new academic schedule for your institution</p>
       </div>
 
-      <button onClick={generateTimetable}>Generate Timetable</button>
+      <div className="form-row">
+        <div className="form-group">
+          <label>Program Type</label>
+          <select value={course} onChange={e=>setCourse(e.target.value)}>
+            <option value="B.Ed">Bachelor of Education (B.Ed)</option>
+            <option value="M.Ed">Master of Education (M.Ed)</option>
+            <option value="FYUP">Four Year Undergraduate Program</option>
+            <option value="ITEP">Integrated Teacher Education Program</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Academic Semester</label>
+          <select value={semester} onChange={e=>setSemester(Number(e.target.value))}>
+            {[1,2,3,4,5,6,7,8].map(s=><option key={s} value={s}>Semester {s}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div style={{marginTop: "2rem"}}>
+        <button onClick={generateTimetable} disabled={loading}>
+          {loading ? "Generating..." : "Generate Timetable"}
+        </button>
+        <button className="btn-secondary">Load Template</button>
+      </div>
 
       {schedule.length > 0 && (
-        <div>
-          <h3>Generated Timetable</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Day / Time</th>
-                {timeSlots.map(slot => <th key={slot}>{slot}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {schedule.map(row => (
-                <tr key={row.day}>
-                  <td>{row.day}</td>
-                  {row.sessions.map((s,i) => <td key={i}>{s.course}<br />{s.faculty}<br />{s.room}</td>)}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{marginTop: "3rem"}}>
+          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem"}}>
+            <div>
+              <h3>Generated Timetable</h3>
+              <p style={{color: "#64748b", margin: 0}}>{course} - Semester {semester}</p>
+            </div>
+            <div style={{background: "#f0fdf4", color: "#166534", padding: "0.5rem 1rem", borderRadius: "8px", fontSize: "0.875rem", fontWeight: "600"}}>
+              Schedule Ready
+            </div>
+          </div>
 
-          <div>
-            <button onClick={saveTimetable}>Save</button>
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Day / Time</th>
+                  {timeSlots.map(slot => <th key={slot}>{slot}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {schedule.map(row => (
+                  <tr key={row.day}>
+                    <td style={{fontWeight: "700", background: "#f8fafc"}}>{row.day}</td>
+                    {row.sessions.map((s,i) => (
+                      <td key={i} style={{padding: "1rem"}}>
+                        <div style={{fontWeight: "600", color: "#0f172a", marginBottom: "0.25rem"}}>
+                          {s.course}
+                        </div>
+                        <div style={{fontSize: "0.875rem", color: "#64748b"}}>
+                          Faculty: {s.faculty}
+                        </div>
+                        <div style={{fontSize: "0.875rem", color: "#64748b"}}>
+                          Room: {s.room}
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{display: "flex", gap: "0.75rem", marginTop: "2rem", flexWrap: "wrap"}}>
+            <button onClick={saveTimetable}>Save Schedule</button>
             <button onClick={downloadPDF}>Download PDF</button>
-            <button onClick={copyToClipboard}>Copy</button>
-            <button onClick={shareWhatsApp}>Send to WhatsApp</button>
+            <button className="btn-secondary" onClick={copyToClipboard}>Copy Data</button>
+            <button className="btn-secondary" onClick={shareWhatsApp}>Share via WhatsApp</button>
           </div>
         </div>
       )}

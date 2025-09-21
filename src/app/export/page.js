@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-export default function ExportPage() {
+function ExportContent() {
   const [timetable, setTimetable] = useState(null);
   const params = useSearchParams();
   const id = params.get("id");
@@ -39,7 +39,7 @@ export default function ExportPage() {
 
   return (
     <div>
-      <h2>📤 Export Timetable</h2>
+      <h2>Export Timetable</h2>
       <div ref={tableRef} style={{ background: "#fff", padding: "1rem" }}>
         <h3>
           {timetable.course} - Semester {timetable.semester}
@@ -71,8 +71,16 @@ export default function ExportPage() {
       </div>
 
       <button onClick={downloadPDF} style={{ marginTop: "1rem" }}>
-        📄 Download PDF
+        Download PDF
       </button>
     </div>
+  );
+}
+
+export default function ExportPage() {
+  return (
+    <Suspense fallback={<div>Loading export...</div>}>
+      <ExportContent />
+    </Suspense>
   );
 }

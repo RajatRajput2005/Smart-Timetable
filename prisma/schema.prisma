@@ -10,14 +10,14 @@ generator client {
 model Faculty {
   id       Int      @id @default(autoincrement())
   name     String
-  busySlots String[]
+  busySlots String   @default("[]")
 }
 
 model Room {
   id       Int      @id @default(autoincrement())
   name     String
   capacity Int
-  busySlots String[]
+  busySlots String   @default("[]")
 }
 
 model Timetable {

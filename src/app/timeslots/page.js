@@ -1,7 +1,7 @@
 export default function TimeslotsPage() {
   return (
     <div>
-      <h2>⏰ Time Slot Configuration</h2>
+      <h2>Time Slot Configuration</h2>
       <p className="mt-4">Define time slots for scheduling classes:</p>
 
       <table>
@@ -31,7 +31,7 @@ export default function TimeslotsPage() {
         </tbody>
       </table>
 
-      <button className="mt-4">💾 Save Slots</button>
+      <button className="mt-4">Save Slots</button>
     </div>
   );
 }

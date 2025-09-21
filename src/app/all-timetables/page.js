@@ -12,7 +12,7 @@ export default function AllTimetablesPage() {
 
   return (
     <div>
-      <h2>📋 All Timetables</h2>
+      <h2>All Timetables</h2>
       {timetables.length === 0 ? (
         <p>No timetables saved yet.</p>
       ) : (
