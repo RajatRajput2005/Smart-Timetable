@@ -1,56 +1,42 @@
+"use client";
+import { useEffect, useState } from "react";
+
 export default function AllTimetablesPage() {
+  const [timetables, setTimetables] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/timetable")
+      .then((r) => r.json())
+      .then(setTimetables);
+  }, []);
+
   return (
     <div>
       <h2>📋 All Timetables</h2>
-      <p className="mt-4">Manage all created timetables from here.</p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Program</th>
-            <th>Semester</th>
-            <th>Students</th>
-            <th>Status</th>
-            <th>Last Updated</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>B.Ed</td>
-            <td>Year 1 - Sem 1</td>
-            <td>45</td>
-            <td>✅ Active</td>
-            <td>2 hours ago</td>
-            <td>
-              <button>View</button>
-              <button>Edit</button>
-            </td>
-          </tr>
-          <tr>
-            <td>M.Ed</td>
-            <td>Year 2 - Sem 3</td>
-            <td>32</td>
-            <td>🕒 Draft</td>
-            <td>1 day ago</td>
-            <td>
-              <button>View</button>
-              <button>Edit</button>
-            </td>
-          </tr>
-          <tr>
-            <td>FYUP</td>
-            <td>Sem 5</td>
-            <td>120</td>
-            <td>✅ Active</td>
-            <td>5 days ago</td>
-            <td>
-              <button>View</button>
-              <button>Edit</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {timetables.length === 0 ? (
+        <p>No timetables saved yet.</p>
+      ) : (
+        <table border="1" cellPadding="6" style={{ borderCollapse: "collapse", width: "100%" }}>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Course</th>
+              <th>Semester</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {timetables.map((t) => (
+              <tr key={t.id}>
+                <td>{t.id}</td>
+                <td>{t.course}</td>
+                <td>{t.semester}</td>
+                <td>{new Date(t.createdAt).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

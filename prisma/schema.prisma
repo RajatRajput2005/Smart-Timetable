@@ -1,0 +1,29 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Faculty {
+  id       Int      @id @default(autoincrement())
+  name     String
+  busySlots String[]
+}
+
+model Room {
+  id       Int      @id @default(autoincrement())
+  name     String
+  capacity Int
+  busySlots String[]
+}
+
+model Timetable {
+  id        Int      @id @default(autoincrement())
+  course    String
+  semester  Int
+  schedule  Json
+  createdAt DateTime @default(now())
+}

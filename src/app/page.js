@@ -1,7 +1,7 @@
 export default function HomePage() {
   return (
     <div>
-      <h2>📊 Dashboard Overview</h2>
+      <h2> Dashboard Overview</h2>
       <p className="mt-2">Welcome back! Here’s the latest system summary.</p>
 
       {/* Stats Cards */}
@@ -25,8 +25,8 @@ export default function HomePage() {
       </div>
 
       {/* System Status */}
-      <div className="mt-6" style={{ padding: "1rem", background: "#065f46", borderRadius: "8px" }}>
-        ✅ System Status: All timetables optimized with zero conflicts.
+      <div className="mt-6" style={{ padding: "1rem", background: "black", borderRadius: "8px" }}>
+         System Status: All timetables optimized with zero conflicts.
       </div>
 
       {/* Analytics Section */}
@@ -60,7 +60,7 @@ export default function HomePage() {
 
       {/* Quick Actions */}
       <div className="card mt-6">
-        <h3 style={{ fontSize: "1.2rem" }}>⚡ Quick Actions</h3>
+        <h3 style={{ fontSize: "1.2rem" }}> Quick Actions</h3>
         <div className="flex gap mt-2">
           <button>B.Ed Programs</button>
           <button>M.Ed Programs</button>
