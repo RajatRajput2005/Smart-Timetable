@@ -379,11 +379,24 @@ td {
 }
 
 tr:hover td {
-  background: #353535;
+  background: #353535 !important;
 }
 
 tr:last-child td {
   border-bottom: none;
+}
+
+/* Force table cell content colors in dark theme */
+table td div {
+  color: inherit;
+}
+
+table td div:first-child {
+  color: #f0f0f0 !important;
+}
+
+table td div:not(:first-child) {
+  color: #b0b0b0 !important;
 }
 
 th:first-child {

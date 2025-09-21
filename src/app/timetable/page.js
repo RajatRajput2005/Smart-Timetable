@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function TimetablePage() {
   const [facultyList, setFacultyList] = useState([]);
@@ -82,9 +83,9 @@ export default function TimetablePage() {
           <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem"}}>
             <div>
               <h3>Generated Timetable</h3>
-              <p style={{color: "#64748b", margin: 0}}>{course} - Semester {semester}</p>
+              <p style={{color: "#b0b0b0", margin: 0}}>{course} - Semester {semester}</p>
             </div>
-            <div style={{background: "#f0fdf4", color: "#166534", padding: "0.5rem 1rem", borderRadius: "8px", fontSize: "0.875rem", fontWeight: "600"}}>
+            <div style={{background: "#22c55e", color: "#ffffff", padding: "0.5rem 1rem", borderRadius: "8px", fontSize: "0.875rem", fontWeight: "600"}}>
               Schedule Ready
             </div>
           </div>
@@ -100,16 +101,16 @@ export default function TimetablePage() {
               <tbody>
                 {schedule.map(row => (
                   <tr key={row.day}>
-                    <td style={{fontWeight: "700", background: "#f8fafc"}}>{row.day}</td>
+                    <td style={{fontWeight: "700", background: "#333333", color: "#f0f0f0"}}>{row.day}</td>
                     {row.sessions.map((s,i) => (
                       <td key={i} style={{padding: "1rem"}}>
-                        <div style={{fontWeight: "600", color: "#0f172a", marginBottom: "0.25rem"}}>
+                        <div style={{fontWeight: "600", color: "#f0f0f0", marginBottom: "0.25rem"}}>
                           {s.course}
                         </div>
-                        <div style={{fontSize: "0.875rem", color: "#64748b"}}>
+                        <div style={{fontSize: "0.875rem", color: "#b0b0b0"}}>
                           Faculty: {s.faculty}
                         </div>
-                        <div style={{fontSize: "0.875rem", color: "#64748b"}}>
+                        <div style={{fontSize: "0.875rem", color: "#b0b0b0"}}>
                           Room: {s.room}
                         </div>
                       </td>
@@ -122,7 +123,7 @@ export default function TimetablePage() {
 
           <div style={{display: "flex", gap: "0.75rem", marginTop: "2rem", flexWrap: "wrap"}}>
             <button onClick={saveTimetable}>Save Schedule</button>
-            <button onClick={downloadPDF}>Download PDF</button>
+            <Link href="/export" className="button-primary">Export to PDF</Link>
             <button className="btn-secondary" onClick={copyToClipboard}>Copy Data</button>
             <button className="btn-secondary" onClick={shareWhatsApp}>Share via WhatsApp</button>
           </div>

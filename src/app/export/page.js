@@ -6,16 +6,35 @@ import html2canvas from "html2canvas";
 
 function ExportContent() {
   const [timetable, setTimetable] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const params = useSearchParams();
   const id = params.get("id");
   const tableRef = useRef();
 
   useEffect(() => {
+    setLoading(true);
     fetch("/api/timetable")
       .then((r) => r.json())
       .then((data) => {
-        const found = data.find((t) => String(t.id) === id);
-        setTimetable(found);
+        if (data && data.length > 0) {
+          // If ID is provided, find specific timetable, otherwise use the most recent one
+          const found = id ? data.find((t) => String(t.id) === id) : data[data.length - 1];
+          if (found) {
+            setTimetable(found);
+          } else {
+            setError("Timetable not found");
+          }
+        } else {
+          setError("No timetables available. Please create a timetable first.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching timetables:", error);
+        setError("Error loading timetable data");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [id]);
 
@@ -35,7 +54,10 @@ function ExportContent() {
     pdf.save(`timetable-${timetable.course}-sem${timetable.semester}.pdf`);
   };
 
-  if (!timetable) return <p>Loading timetable...</p>;
+  if (loading) return <div style={{padding: "2rem", textAlign: "center"}}><p>Loading timetable data...</p></div>;
+  if (error) return <div style={{padding: "2rem", textAlign: "center", color: "#ef4444"}}><p>{error}</p><p style={{marginTop: "1rem"}}><a href="/timetable" style={{color: "#7c3aed"}}>Go create a timetable first</a></p></div>;
+  if (!timetable) return <div style={{padding: "2rem", textAlign: "center"}}><p>No timetable available</p><p style={{marginTop: "1rem"}}><a href="/timetable" style={{color: "#7c3aed"}}>Go create a timetable first</a></p></div>;
+  if (!timetable.schedule || timetable.schedule.length === 0) return <div style={{padding: "2rem", textAlign: "center"}}><p>This timetable has no schedule data</p><p style={{marginTop: "1rem"}}><a href="/timetable" style={{color: "#7c3aed"}}>Go create a new timetable</a></p></div>;
 
   return (
     <div>
@@ -48,20 +70,20 @@ function ExportContent() {
           <thead style={{ background: "#ddd" }}>
             <tr>
               <th>Day / Time</th>
-              {timetable.schedule[0].sessions.map((_, i) => (
+              {timetable.schedule && timetable.schedule[0] && timetable.schedule[0].sessions.map((_, i) => (
                 <th key={i}>Slot {i + 1}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {timetable.schedule.map((row, i) => (
+            {timetable.schedule && timetable.schedule.map((row, i) => (
               <tr key={i}>
                 <td><b>{row.day}</b></td>
-                {row.sessions.map((s, j) => (
+                {row.sessions && row.sessions.map((s, j) => (
                   <td key={j}>
                     <b>{s.course}</b> <br />
-                    {s.faculty} <br />
-                    {s.room}
+                    Faculty: {s.faculty} <br />
+                    Room: {s.room}
                   </td>
                 ))}
               </tr>
